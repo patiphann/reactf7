@@ -1,13 +1,6 @@
 const {Router, Route, IndexRoute, browserHistory} = ReactRouter;
 
 Meteor.startup(function() {
-
-  // Initialize app
-  var myApp = new Framework7();
-
-  // If we need to use custom DOM library, let's save it to $$ variable:
-  var $$ = Dom7;
-
   const routes = (
     <Router history={browserHistory}>
       <Route component={App}>

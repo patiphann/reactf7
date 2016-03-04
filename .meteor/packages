@@ -24,4 +24,5 @@ accounts-password
 reactrouter:react-router
 static-html
 twbs:bootstrap
-grigio:babel
+aldeed:collection2
+themeteorchef:jquery-validation
