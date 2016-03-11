@@ -37,14 +37,16 @@ Navbar = React.createClass({
       <div className="navbar">
 		    <div className="navbar-inner">
 	        <div className="left">
-	            <a href="#" className="link" onClick={ this.backPage }>
-	                <i className="icon icon-back"></i>
-	                <span>Back</span>
-	            </a>
+            <a href="#" className="link" onClick={ this.backPage }>
+              <i className="icon icon-back"></i>
+              <span>Back</span>
+            </a>
 	        </div>
-	        <div className="center">{ this.props.show.title }</div>
+	        <div className="center">
+            { this.props.show.title }
+          </div>
 	        <div className="right">
-	        		{ this.renderRight() }
+	        	{ this.renderRight() }
 	        </div>
 			  </div>
 			</div>

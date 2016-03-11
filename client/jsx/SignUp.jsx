@@ -77,17 +77,13 @@ SignUp = React.createClass({
   	var defaultDate = new Date();
   	defaultDate = defaultDate.yyyymmdd('-');
 
-  	var obj = {
-  		defaultDate: defaultDate
-  	};
-
     return {
-    	value: obj
+    	dob: defaultDate
     };
   },
 
-  handleChange: function(event) {
-    this.setState({value: event.target.value});
+  handleChange: function(e) {
+    this.setState({ [e.target.name]: e.target.value });
   },
 
   // Loads items from the Tasks collection and puts them on this.data.tasks
@@ -114,7 +110,7 @@ SignUp = React.createClass({
 		                name="email"
 		                required
 		                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-		                title="HTML5 Please enter a valid email address."
+		                title="Please enter a valid email address."
 		                placeholder="E-mail" />
 				          </div>
 				        </div>
@@ -144,7 +140,7 @@ SignUp = React.createClass({
 		                ref="name"
 		                name="name"
 		                pattern="[A-Za-z ]+"
-		                title="HTML5 Please enter your name with english only."
+		                title="Please enter your name with english only."
 		                placeholder="Your name" />
 				          </div>
 				        </div>
@@ -175,7 +171,7 @@ SignUp = React.createClass({
 		                type="date"
 		                ref="dob"
 		                name="dob"
-		                value={this.state.value.defaultDate}
+		                value={this.state.dob}
 		                onChange={this.handleChange}
 		                placeholder="Birth day" />
 				          </div>

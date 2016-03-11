@@ -1,0 +1,1 @@
+Articles = new Mongo.Collection("article");
