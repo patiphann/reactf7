@@ -1,4 +1,8 @@
+.content-block {
+  margin: 35px 0 60px 0 !important;
+}
+
 .error {
-    color: #FF0000;
-    font-size: 12px;
+  color: #FF0000;
+  font-size: 12px;
 }

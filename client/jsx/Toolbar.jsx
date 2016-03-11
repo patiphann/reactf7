@@ -3,21 +3,34 @@ Toolbar = React.createClass({
     show: React.PropTypes.object.isRequired
   },
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
+  backPage() {
+  	this.context.router.goBack();
+  },
+
+  goHome() {
+  	this.context.router.push('/');
+  },
+
+  goMenu() {
+  	this.context.router.push('/main-menu');
+  },
+
   render() {
     return (
       <div className="toolbar tabbar">
 		    <div className="toolbar-inner">
-		        <a href="#tab1" className="tab-link active">
-		            <i className="glyphicon glyphicon-info-sign"></i>
+		        <a href="#" className="tab-link" onClick={ this.backPage }>
+		            <i className="glyphicon glyphicon-triangle-left"></i>
 		        </a>
-		        <a href="#tab2" className="tab-link">
-		            <i className="glyphicon glyphicon-envelope"></i>
+		        <a href="#" className="tab-link" onClick={ this.goHome }>
+		            <i className="glyphicon glyphicon-home"></i>
 		        </a>
-		        <a href="#tab3" className="tab-link">
-		            <i className="glyphicon glyphicon-cloud"></i>
-		        </a>
-		        <a href="#tab4" className="tab-link">
-		            <i className="glyphicon glyphicon-camera"></i>
+		        <a href="#" className="tab-link" onClick={ this.goMenu }>
+		            <i className="glyphicon glyphicon-th-list"></i>
 		        </a>
 		    </div>
 			</div>

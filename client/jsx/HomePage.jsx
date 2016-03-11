@@ -1,36 +1,56 @@
 HomePage = React.createClass({
+	// This mixin makes the getMeteorData method work
+  mixins: [ReactMeteorData],
+
+  getInitialState: function() {
+  	return {
+    };
+  },
+
+	contextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getMeteorData() {
+  	var handle = Meteor.subscribe('article');
+
+    return {
+    	articlesLoading: ! handle.ready(), // Use handle to show loading state
+      articles: Articles.find({}).fetch()
+    };
+  },
+
+  renderArticle() {
+    return this.data.articles.map((doc) => {
+      return <ArticleL
+        key={doc._id}
+        article={doc}/>;
+    });
+  },
+
+  formInsArticle() {
+  	this.context.router.push('/article/new');
+  },
+
   render() {
+  	// Show a loading indicator if data is not ready
+    if (this.data.articlesLoading) {
+      return <AppLoading />;
+    }
+
+    if (this.data.articles.length === 0) {
+    	return <NotFoundData />;
+    }
+
     return (
-      <div className="tabs">
-			<div id="tab1" className="tab active">
-			<p>Tab 1</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at nibh felis. Nunc consequat diam et tellus tempor gravida. Donec hendrerit aliquet risus, ut tempor purus dictum sit amet. Integer sit amet lacus eget ipsum pulvinar interdum. Proin semper turpis sed placerat dapibus. Sed iaculis id nibh a viverra. Sed vitae tellus sed purus lacinia dignissim. Aenean sagittis interdum leo in molestie. Aliquam sodales in diam eu consectetur. Sed posuere a orci id imperdiet.</p>
-			<p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. Vestibulum ornare ut eros vitae adipiscing. Vestibulum volutpat justo enim, ullamcorper vulputate sapien lacinia vel. Integer sed justo ultrices augue tincidunt dictum eu vel orci. Mauris sodales auctor diam vel condimentum.</p>
-			<p>Praesent mauris purus, faucibus vel hendrerit at, dapibus quis lorem. Sed placerat fermentum blandit. Suspendisse potenti. Cras sollicitudin laoreet tellus, ut gravida leo eleifend convallis. Sed pharetra nisl quis libero fermentum pharetra. Cras lacinia quam turpis, eget varius risus interdum sit amet. Quisque laoreet tortor dui, vitae accumsan lacus fringilla in. Quisque consequat placerat risus, non ornare felis scelerisque quis. Sed adipiscing diam tellus, vel faucibus mauris rhoncus vel. Vestibulum eu ultrices tortor, non suscipit lorem. Mauris tellus nulla, volutpat quis lacus eu, scelerisque adipiscing dui. Nullam nec tempor sem, nec pulvinar sapien. Etiam blandit condimentum vehicula.</p>
-			<p>Praesent nec imperdiet diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur. Nulla pellentesque elementum ligula vitae porta. Nunc sollicitudin mi quis mi mattis cursus. Nulla diam felis, ullamcorper eget lacinia ac, auctor id velit. Fusce enim nunc, egestas a augue vitae, malesuada tincidunt risus. Nullam fringilla, enim nec porta iaculis, enim leo pharetra nunc, eget rutrum tortor dui et risus. Etiam sit amet molestie dolor. Curabitur ultrices justo ut augue ornare, vel pharetra libero adipiscing. Duis rhoncus a felis ac venenatis. Duis posuere non leo vitae tincidunt. Integer luctus arcu ut risus posuere, vel vehicula ipsum elementum. Duis et cursus sapien. </p>
-			</div>
-			<div id="tab2" className="tab">
-			<p>Tab 2</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at nibh felis. Nunc consequat diam et tellus tempor gravida. Donec hendrerit aliquet risus, ut tempor purus dictum sit amet. Integer sit amet lacus eget ipsum pulvinar interdum. Proin semper turpis sed placerat dapibus. Sed iaculis id nibh a viverra. Sed vitae tellus sed purus lacinia dignissim. Aenean sagittis interdum leo in molestie. Aliquam sodales in diam eu consectetur. Sed posuere a orci id imperdiet.</p>
-			<p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. Vestibulum ornare ut eros vitae adipiscing. Vestibulum volutpat justo enim, ullamcorper vulputate sapien lacinia vel. Integer sed justo ultrices augue tincidunt dictum eu vel orci. Mauris sodales auctor diam vel condimentum.</p>
-			<p>Praesent mauris purus, faucibus vel hendrerit at, dapibus quis lorem. Sed placerat fermentum blandit. Suspendisse potenti. Cras sollicitudin laoreet tellus, ut gravida leo eleifend convallis. Sed pharetra nisl quis libero fermentum pharetra. Cras lacinia quam turpis, eget varius risus interdum sit amet. Quisque laoreet tortor dui, vitae accumsan lacus fringilla in. Quisque consequat placerat risus, non ornare felis scelerisque quis. Sed adipiscing diam tellus, vel faucibus mauris rhoncus vel. Vestibulum eu ultrices tortor, non suscipit lorem. Mauris tellus nulla, volutpat quis lacus eu, scelerisque adipiscing dui. Nullam nec tempor sem, nec pulvinar sapien. Etiam blandit condimentum vehicula.</p>
-			<p>Praesent nec imperdiet diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur. Nulla pellentesque elementum ligula vitae porta. Nunc sollicitudin mi quis mi mattis cursus. Nulla diam felis, ullamcorper eget lacinia ac, auctor id velit. Fusce enim nunc, egestas a augue vitae, malesuada tincidunt risus. Nullam fringilla, enim nec porta iaculis, enim leo pharetra nunc, eget rutrum tortor dui et risus. Etiam sit amet molestie dolor. Curabitur ultrices justo ut augue ornare, vel pharetra libero adipiscing. Duis rhoncus a felis ac venenatis. Duis posuere non leo vitae tincidunt. Integer luctus arcu ut risus posuere, vel vehicula ipsum elementum. Duis et cursus sapien. </p>
-			</div>
-			<div id="tab3" className="tab">
-			<p>Tab 3</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at nibh felis. Nunc consequat diam et tellus tempor gravida. Donec hendrerit aliquet risus, ut tempor purus dictum sit amet. Integer sit amet lacus eget ipsum pulvinar interdum. Proin semper turpis sed placerat dapibus. Sed iaculis id nibh a viverra. Sed vitae tellus sed purus lacinia dignissim. Aenean sagittis interdum leo in molestie. Aliquam sodales in diam eu consectetur. Sed posuere a orci id imperdiet.</p>
-			<p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. Vestibulum ornare ut eros vitae adipiscing. Vestibulum volutpat justo enim, ullamcorper vulputate sapien lacinia vel. Integer sed justo ultrices augue tincidunt dictum eu vel orci. Mauris sodales auctor diam vel condimentum.</p>
-			<p>Praesent mauris purus, faucibus vel hendrerit at, dapibus quis lorem. Sed placerat fermentum blandit. Suspendisse potenti. Cras sollicitudin laoreet tellus, ut gravida leo eleifend convallis. Sed pharetra nisl quis libero fermentum pharetra. Cras lacinia quam turpis, eget varius risus interdum sit amet. Quisque laoreet tortor dui, vitae accumsan lacus fringilla in. Quisque consequat placerat risus, non ornare felis scelerisque quis. Sed adipiscing diam tellus, vel faucibus mauris rhoncus vel. Vestibulum eu ultrices tortor, non suscipit lorem. Mauris tellus nulla, volutpat quis lacus eu, scelerisque adipiscing dui. Nullam nec tempor sem, nec pulvinar sapien. Etiam blandit condimentum vehicula.</p>
-			<p>Praesent nec imperdiet diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur. Nulla pellentesque elementum ligula vitae porta. Nunc sollicitudin mi quis mi mattis cursus. Nulla diam felis, ullamcorper eget lacinia ac, auctor id velit. Fusce enim nunc, egestas a augue vitae, malesuada tincidunt risus. Nullam fringilla, enim nec porta iaculis, enim leo pharetra nunc, eget rutrum tortor dui et risus. Etiam sit amet molestie dolor. Curabitur ultrices justo ut augue ornare, vel pharetra libero adipiscing. Duis rhoncus a felis ac venenatis. Duis posuere non leo vitae tincidunt. Integer luctus arcu ut risus posuere, vel vehicula ipsum elementum. Duis et cursus sapien. </p>
-			</div>
-			<div id="tab4" className="tab">
-			<p>Tab 4</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at nibh felis. Nunc consequat diam et tellus tempor gravida. Donec hendrerit aliquet risus, ut tempor purus dictum sit amet. Integer sit amet lacus eget ipsum pulvinar interdum. Proin semper turpis sed placerat dapibus. Sed iaculis id nibh a viverra. Sed vitae tellus sed purus lacinia dignissim. Aenean sagittis interdum leo in molestie. Aliquam sodales in diam eu consectetur. Sed posuere a orci id imperdiet.</p>
-			<p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. Vestibulum ornare ut eros vitae adipiscing. Vestibulum volutpat justo enim, ullamcorper vulputate sapien lacinia vel. Integer sed justo ultrices augue tincidunt dictum eu vel orci. Mauris sodales auctor diam vel condimentum.</p>
-			<p>Praesent mauris purus, faucibus vel hendrerit at, dapibus quis lorem. Sed placerat fermentum blandit. Suspendisse potenti. Cras sollicitudin laoreet tellus, ut gravida leo eleifend convallis. Sed pharetra nisl quis libero fermentum pharetra. Cras lacinia quam turpis, eget varius risus interdum sit amet. Quisque laoreet tortor dui, vitae accumsan lacus fringilla in. Quisque consequat placerat risus, non ornare felis scelerisque quis. Sed adipiscing diam tellus, vel faucibus mauris rhoncus vel. Vestibulum eu ultrices tortor, non suscipit lorem. Mauris tellus nulla, volutpat quis lacus eu, scelerisque adipiscing dui. Nullam nec tempor sem, nec pulvinar sapien. Etiam blandit condimentum vehicula.</p>
-			<p>Praesent nec imperdiet diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur. Nulla pellentesque elementum ligula vitae porta. Nunc sollicitudin mi quis mi mattis cursus. Nulla diam felis, ullamcorper eget lacinia ac, auctor id velit. Fusce enim nunc, egestas a augue vitae, malesuada tincidunt risus. Nullam fringilla, enim nec porta iaculis, enim leo pharetra nunc, eget rutrum tortor dui et risus. Etiam sit amet molestie dolor. Curabitur ultrices justo ut augue ornare, vel pharetra libero adipiscing. Duis rhoncus a felis ac venenatis. Duis posuere non leo vitae tincidunt. Integer luctus arcu ut risus posuere, vel vehicula ipsum elementum. Duis et cursus sapien. </p>
-			</div>
-			</div>
+    	<div>
+			  <div className="list-block">
+			  	<div className="content-block-title" onClick={this.formInsArticle}><span className="glyphicon glyphicon-plus text-success"></span> Articles</div>
+				  <ul>
+				    {this.renderArticle()}
+				  </ul>
+				</div>
+		  </div>
     );
   }
 });

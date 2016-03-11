@@ -19,6 +19,9 @@ App = React.createClass({
     	case '/signup':
     		objShow.title = 'Sign Up';
     	break;
+    	case '/signin':
+    		objShow.title = 'Sign In';
+    	break;
     }
 
     return {
@@ -39,26 +42,26 @@ App = React.createClass({
   },
 
   render() {
-    let appBodyContainerClass = "";
-
     return (
     	<div className="view view-main">
-    		<div className="pages">
-    			<div className="page navbar-fixed">
+  			<div className="page navbar-fixed">
 
-						{ this.renderNavbar() }
-		      
-		      	<div className="page-content">
-			        <div className="content-block">
-			          { this.data.subsReady ?
-			            this.props.children :
-			            <AppLoading /> }
-			        </div>
-			      </div>
-
-			      { this.renderToolbar() }
-
+					{ this.renderNavbar() }
+	      
+	      	<div className="page-content">
+		        <div className="content-block">
+		          { this.data.subsReady ?
+		            this.props.children :
+		            <AppLoading /> }
+		        </div>
 		      </div>
+
+		      { this.renderToolbar() }
+
+		      <a href="#" className="floating-button color-pink">
+				    <i className="icon icon-plus"></i>
+				  </a>
+
 	      </div>
 	    </div>
     );
